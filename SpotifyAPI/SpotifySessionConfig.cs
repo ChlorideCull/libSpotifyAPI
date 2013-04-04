@@ -5,8 +5,18 @@ using System.Text;
 
 namespace SpotifyAPI
 {
+    /// <summary>
+    /// This class contains all the settings available to the API session. This class is not static, you have to instantiate it using new.
+    /// </summary>
     class SpotifySessionConfig
     {
+        /// <param name="SpotifyAPIKey">The API Key provided by the Spotify Developers website.</param>
+        public SpotifySessionConfig(byte[] SpotifyAPIKey)
+        {
+            APIKey = SpotifyAPIKey;
+        }
+        public SpotifySessionConfig() { }
+
         /// <summary>
         /// API Version is to be set to what version corresponds to your libspotify dll.
         /// </summary>
@@ -20,7 +30,7 @@ namespace SpotifyAPI
         /// </summary>
         public string SettingsLocation = System.IO.Path.Combine(Environment.CurrentDirectory, "spotifysettings");
         /// <summary>
-        /// This is required to be set with the byte array of the API key you get from the Spotify Developers website.
+        /// This is required to be set with the byte array of the API key you get from the Spotify Developers website, it can be set through the constructor.
         /// </summary>
         public byte[] APIKey;
         /// <summary>
