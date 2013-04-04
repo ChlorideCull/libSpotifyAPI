@@ -32,13 +32,17 @@ namespace SpotifyAPI
             sessionconfig.application_key = apikey;
             sessionconfig.application_key_size = Configuration.APIKey.Length;
             sessionconfig.cache_location = Configuration.CacheLocation;
+            sessionconfig.device_id = Configuration.DeviceID;
             sessionconfig.compress_playlists = Configuration.CompressPlaylists;
             sessionconfig.dont_save_metadata_for_playlists = Configuration.DontSaveMetadataForPlaylists;
             sessionconfig.initially_unload_playlists = Configuration.InitiallyUnloadPlaylists;
             sessionconfig.settings_location = Configuration.SettingsLocation;
             sessionconfig.user_agent = Configuration.UserAgent;
             //TODO: Implement callbacks to get music streams etc.
-            //TODO: proxy is available at the official C-API, where is it in libspotify.net? Forking required?
+            //TODO: Fix the proxy below, needs to get type.
+            /*sessionconfig.proxy = Configuration.Proxy.GetProxy(new Uri("http://spotify.com/")).AbsoluteUri; //Should be correct. I think.
+            sessionconfig.proxy_username = Configuration.Proxy.Credentials.GetCredential(new Uri("http://spotify.com/"),*/
+            sessionconfig.ca_certs_filename = Configuration.CACertsName;
 
             temp = libspotify.sp_session_create(ref sessionconfig, out spotsession);
             if (temp != libspotify.sp_error.OK)
