@@ -1,0 +1,3 @@
+[submodule "lib/libspotifydotnet"]
+	path = lib/libspotifydotnet
+	url = https://github.com/steamruler/libspotify.net.git
