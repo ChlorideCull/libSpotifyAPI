@@ -19,10 +19,6 @@ A cup of tea, some kind of C# compiler/IDE, an Spotify Application Key, the nati
 7. Read the damn documentation, it's in IntelliSense.
 8. Add some [Spotify branding](http://developer.spotify.com/technologies/libspotify/#branding) to avoid breaking the [libspotify terms of use](http://developer.spotify.com/technologies/libspotify/#terms-of-use) which you still have to follow.
 
-##Licence
-
-All commits in this library is released to the public domain by its respective owner. We have nothing against you mentioning us though.
-
 - - -
 
 This product uses SPOTIFY(R) CORE but is not endorsed, certified or otherwise approved in any way by Spotify. Spotify is the registered trade mark of the Spotify Group.
