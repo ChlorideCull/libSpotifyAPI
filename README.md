@@ -1,12 +1,12 @@
 #libSpotifyAPI
 
-libSpotifyAPI is a better wrapper for libspotify programmed in C#. It's aimed to be usable on Linux (through mono) and Windows provided you can get the C-library. Please note that isn't just a wrapper that requires you to handle unhandled memory and marshaling, even less requiring you to even read the official API documentation for libspotify!
+libSpotifyAPI is the real Spotify-API for C#, using the functions of C# and making creating your Spotify-integrated application.
 
 ##Setting up libSpotifyAPI
 
 ###Requirements
 
-A cup of tea, some kind of C# compiler/IDE, an Spotify Application Key and the native libspotify C-library.
+A cup of tea, some kind of C# compiler/IDE, an Spotify Application Key, the native libspotify C-library and libspotify.net
 
 ###Installation, Compiling and Using.
 
@@ -18,6 +18,10 @@ A cup of tea, some kind of C# compiler/IDE, an Spotify Application Key and the n
 6. Create a ``SpotifySession`` object and set its settings (including API key).
 7. Read the damn documentation, it's in IntelliSense.
 8. Add some [Spotify branding](http://developer.spotify.com/technologies/libspotify/#branding) to avoid breaking the [libspotify terms of use](http://developer.spotify.com/technologies/libspotify/#terms-of-use) which you still have to follow.
+
+##Licence
+
+All commits in this library is released to the public domain by its respective owner. We have nothing against you mentioning us though.
 
 - - -
 
