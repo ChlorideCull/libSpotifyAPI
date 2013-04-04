@@ -60,6 +60,6 @@ namespace SpotifyAPI
         /// <summary>
         /// A certificate file containing all root ca certificates in PEM format. Exported from the OS by default.
         /// </summary>
-        public System.Net.IWebProxy Proxy = System.Net.WebRequest.GetSystemWebProxy();
+        public string CACertsName; //TODO: Import from OS.
     }
 }
