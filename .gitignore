@@ -1,0 +1,4 @@
+libspotify.dll
+*.suo
+*/bin/
+*/obj/
