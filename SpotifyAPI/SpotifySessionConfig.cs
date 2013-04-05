@@ -8,7 +8,7 @@ namespace SpotifyAPI
     /// <summary>
     /// This class contains all the settings available to the API session. This class is not static, you have to instantiate it using new.
     /// </summary>
-    class SpotifySessionConfig
+    public class SpotifySessionConfig
     {
         /// <param name="SpotifyAPIKey">The API Key provided by the Spotify Developers website.</param>
         public SpotifySessionConfig(byte[] SpotifyAPIKey)

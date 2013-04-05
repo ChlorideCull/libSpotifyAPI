@@ -23,7 +23,7 @@ namespace SpotifyAPI
         /// <param name="Username">The username to login with.</param>
         /// <param name="Password">The password to login with. You may not store this as plaintext according to the libspotify Terms of Use.</param>
         /// <param name="Configuration">The session configuration to use.</param>
-        public void SpotifySession(string Username, string Password, SpotifySessionConfig Configuration)
+        public SpotifySession(string Username, string Password, SpotifySessionConfig Configuration)
         {
             libspotify.sp_session_config sessionconfig = new libspotify.sp_session_config();
             sessionconfig.api_version = Configuration.APIVersion;
