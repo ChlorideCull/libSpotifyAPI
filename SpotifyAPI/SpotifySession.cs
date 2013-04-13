@@ -11,14 +11,13 @@ namespace SpotifyAPI
     {
         private libspotify.sp_error temp;
         private IntPtr spotsession;
-
-        private void ThrowException(Exception exc, libspotify.sp_error error)
-        {
-
-        }
+        /// <summary>
+        /// This stream will be written to when music data is recieved.
+        /// </summary>
+        public static SpotifyMusicStream MusicStream = new SpotifyMusicStream(0);
 
         /// <summary>
-        /// This function initiates a new Spotify Session using the provided configuration, username and password. Please note that using multiple sessions per application is unsupported.
+        /// Initiate a new Spotify Session using the provided configuration, username and password. Please note that using multiple sessions per application is unsupported.
         /// </summary>
         /// <param name="Username">The username to login with.</param>
         /// <param name="Password">The password to login with. You may not store this as plaintext according to the libspotify Terms of Use.</param>
@@ -43,6 +42,11 @@ namespace SpotifyAPI
             /*sessionconfig.proxy = Configuration.Proxy.GetProxy(new Uri("http://spotify.com/")).AbsoluteUri; //Should be correct. I think.
             sessionconfig.proxy_username = Configuration.Proxy.Credentials.GetCredential(new Uri("http://spotify.com/"),*/
             sessionconfig.ca_certs_filename = Configuration.CACertsName;
+            libspotify.sp_session_callbacks callbacks = new libspotify.sp_session_callbacks();
+            callbacks.music_delivery = Marshal.GetFunctionPointerForDelegate(mdd);
+            IntPtr callbacksNative = Marshal.AllocHGlobal(Marshal.SizeOf(callbacks));
+            Marshal.StructureToPtr(callbacks, callbacksNative, true);
+            sessionconfig.callbacks = callbacksNative;
 
             temp = libspotify.sp_session_create(ref sessionconfig, out spotsession);
             if (temp != libspotify.sp_error.OK)
@@ -56,6 +60,41 @@ namespace SpotifyAPI
                 SpotifyExceptions.LoginFailedException exc = new SpotifyExceptions.LoginFailedException(libspotify.sp_error_message(temp));
                 throw exc;
             }
+        }
+
+        public SpotifyTrack ResolveURItoTrack(SpotifyURILink link)
+        {
+            IntPtr trck = libspotify.sp_link_as_track(link.InternalLinkStruct);
+            return new SpotifyTrack(trck);
+        }
+
+        /// <summary>
+        /// Starts buffering the Track inside the MusicStream object of the Session.
+        /// </summary>
+        /// <param name="Track">The SpotifyTrack to buffer.</param>
+        public void playTrack(SpotifyTrack Track)
+        {
+            temp = libspotify.sp_session_player_load(spotsession, Track.internalTrack);
+            temp = libspotify.sp_session_player_play(spotsession, true);
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private delegate int MusicDeliveryDelegate(IntPtr sessionPtr, IntPtr formatPtr, IntPtr framesPtr, int num_frames);
+        private static MusicDeliveryDelegate mdd = new MusicDeliveryDelegate(MusicDelivery);
+        //////////
+        private static int MusicDelivery(IntPtr sessionPtr, IntPtr formatPtr, IntPtr framesPtr, int num_frame)
+        {
+            if (num_frame == 0) { return 0; }
+            libspotify.sp_audioformat format = (libspotify.sp_audioformat)Marshal.PtrToStructure(formatPtr, typeof(libspotify.sp_audioformat));
+            byte[] buffer = new byte[num_frame * sizeof(Int16) * format.channels];
+            Marshal.Copy(framesPtr, buffer, 0, buffer.Length);
+            MusicStream.Samplerate = format.sample_rate;
+            MusicStream.Write(buffer, 0, buffer.Length);
+            return num_frame;
         }
     }
 }

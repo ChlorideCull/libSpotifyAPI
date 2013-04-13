@@ -15,7 +15,6 @@ namespace SpotifyAPI
         {
             APIKey = SpotifyAPIKey;
         }
-        public SpotifySessionConfig() { }
 
         /// <summary>
         /// API Version is to be set to what version corresponds to your libspotify dll.
@@ -60,6 +59,6 @@ namespace SpotifyAPI
         /// <summary>
         /// A certificate file containing all root ca certificates in PEM format. Exported from the OS by default.
         /// </summary>
-        public string CACertsName; //TODO: Import from OS.
+        public string CACertsName = null; //TODO: Import from OS.
     }
 }
